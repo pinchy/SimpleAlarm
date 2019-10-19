@@ -25,6 +25,11 @@ bool SimpleAlarm::check(int hours, int minutes, int seconds)
     return false;
 }
 
+bool SimpleAlarm::isEnabled(void)
+{
+    return this->_enabled;
+}
+
 void SimpleAlarm::enable(void)
 {
     this->_enabled = true;
