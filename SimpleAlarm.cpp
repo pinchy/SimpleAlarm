@@ -1,9 +1,32 @@
 #include "SimpleAlarm.h"
 #include <Arduino.h>
+#include <Preferences.h>    // https://github.com/espressif/arduino-esp32/blob/master/libraries/Preferences/examples/StartCounter/StartCounter.ino
+
 
 SimpleAlarm::SimpleAlarm(void) : Time()
 {
     this->_enabled = false;
+}
+
+void SimpleAlarm::load()
+{
+    this->_mem.begin("simplealarm", false);
+    this->set(this->_mem.getUInt("hours"), this->_mem.getUInt("minutes"), this->_mem.getUInt("seconds"));
+    this->_enabled = this->_mem.getUInt("enabled");
+}
+
+void SimpleAlarm::save()
+{
+    this->_mem.begin("simplealarm", false);
+    this->_mem.putUInt("hours", this->getHours());
+    this->_mem.putUInt("minutes", this->getMinutes());
+    this->_mem.putUInt("seconds", this->getSeconds());
+}
+
+
+bool SimpleAlarm::check(Time t)
+{
+    return this->check(t.getHours(), t.getMinutes(), t.getSeconds());
 }
 
 bool SimpleAlarm::check(int hours, int minutes, int seconds)
@@ -26,16 +49,20 @@ bool SimpleAlarm::check(int hours, int minutes, int seconds)
 }
 
 bool SimpleAlarm::isEnabled(void)
-{
+{   
     return this->_enabled;
 }
 
 void SimpleAlarm::enable(void)
 {
     this->_enabled = true;
+    this->_mem.begin("simplealarm", false);
+    this->_mem.putUInt("enabled", this->_enabled);
 }
 
 void SimpleAlarm::disable(void)
 {
     this->_enabled = false;
+    this->_mem.begin("simplealarm", false);
+    this->_mem.putUInt("enabled", this->_enabled);
 }
