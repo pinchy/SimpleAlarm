@@ -15,24 +15,37 @@ class SimpleAlarm : public Time
     public:
         SimpleAlarm(void);
 
-        // load/save the alarm to permanent memory, to surive a reboot.
+        /*
+         * Load the alarm from permanent memory, to surive a reboot.
+         */
         void load();
+
+        /*
+         * Save the alarm to permanent memory, to surive a reboot.
+         */
         void save();
         
-        // compares the passed time with the alarm set time and triggers when
-        // the hours, minutes and seconds match.  If the alarm is enabled, then
-        // the function returns true.  Only returns true once during the active
-        // second.
+        /* Compares the passed time with the alarm set time and triggers when
+         * the hours, minutes and seconds match.  If the alarm is enabled, then
+         * the function returns true.  Only returns true once during the active
+         * second.
+         */
         bool check(Time t);
         bool check(int hours, int minutes, int seconds);
 
-        // enables the alarm
+        /* 
+         * Enables the alarm
+         */
         void enable();
 
-        // disables the alarm
+        /* 
+         * Disavles the alarm
+         */
         void disable();
 
-        // returns the current alarm enabled state
+        /* 
+         * Returns the current alarm enabled state (boolean)
+         */
         bool isEnabled(void);
 };
 
