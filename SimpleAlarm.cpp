@@ -3,7 +3,7 @@
 #include <Preferences.h>    // https://github.com/espressif/arduino-esp32/blob/master/libraries/Preferences/examples/StartCounter/StartCounter.ino
 
 
-SimpleAlarm::SimpleAlarm(void) : Time()
+SimpleAlarm::SimpleAlarm(void) : SimpleTime()
 {
     this->_enabled = false;
 }
@@ -24,7 +24,7 @@ void SimpleAlarm::save()
 }
 
 
-bool SimpleAlarm::check(Time t)
+bool SimpleAlarm::check(SimpleTime t)
 {
     return this->check(t.getHours(), t.getMinutes(), t.getSeconds());
 }

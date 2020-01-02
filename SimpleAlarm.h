@@ -1,11 +1,11 @@
 #ifndef SIMPLEALARM_H
 #define SIMPLEALARM_H
 
-#include <Time.h>
+#include <SimpleTime.h>
 #include <Arduino.h>
 #include <Preferences.h>    
 
-class SimpleAlarm : public Time
+class SimpleAlarm : public SimpleTime
 {
     private:
         bool _enabled;
@@ -30,7 +30,7 @@ class SimpleAlarm : public Time
          * the function returns true.  Only returns true once during the active
          * second.
          */
-        bool check(Time t);
+        bool check(SimpleTime t);
         bool check(int hours, int minutes, int seconds);
 
         /* 
