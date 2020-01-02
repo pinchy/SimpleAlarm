@@ -7,28 +7,28 @@ https://github.com/espressif/arduino-esp32/blob/master/libraries/Preferences/exa
 
 ## Example with NTPClient:
 
-  void setup()
-  {
-    /* your other setup here */
-
-    NTPClient timeClient(ntpUDP, "au.pool.ntp.org", 39600, 60000);
-    SimpleAlarm simpleAlarm = SimpleAlarm();
-
-    simpleAlarm.set(8,30,0);  // set alarm to 8:30am
-    simpleAlarm.save();  // save alarm to memory
-    simpleAlarm.load(); // load alarm from memory
-    simpleAlarm.enable();  // enable alarm
-  }
-
-  void loop()
-  {
-    /* your other loop here */
-
-    timeClient.update();
-    SimpleTime time(timeClient.getHours(), timeClient.getMinutes(), timeClient.getSeconds());
-
-    if(simpleAlarm.check(time))
+    void setup()
     {
-      // Alarm activated
+      /* your other setup here */
+
+      NTPClient timeClient(ntpUDP, "au.pool.ntp.org", 39600, 60000);
+      SimpleAlarm simpleAlarm = SimpleAlarm();
+
+      simpleAlarm.set(8,30,0);  // set alarm to 8:30am
+      simpleAlarm.save();  // save alarm to memory
+      simpleAlarm.load(); // load alarm from memory
+      simpleAlarm.enable();  // enable alarm
     }
-  }
+
+    void loop()
+    {
+      /* your other loop here */
+
+      timeClient.update();
+      SimpleTime time(timeClient.getHours(), timeClient.getMinutes(), timeClient.getSeconds());
+
+      if(simpleAlarm.check(time))
+      {
+        // Alarm activated
+      }
+    }
