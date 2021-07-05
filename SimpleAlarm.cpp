@@ -37,6 +37,7 @@ bool SimpleAlarm::check(int hours, int minutes, int seconds)
         if(this->getSeconds() == seconds && !this->_activated)
         {
             this->_activated = true;
+            if(this->_callback != nullptr) this->_callback;
             return true;
         }
         else

@@ -8,12 +8,15 @@
 #include <Preferences.h>    
 #endif
 
+typedef void (*CallBack)();
+
 class SimpleAlarm : public SimpleTime
 {
     private:
         bool _enabled;
         bool _activated;
-        
+        CallBack _callback;
+
         #ifdef ARDUINO_ARCH_ESP32
         Preferences _mem;
         #endif
@@ -40,6 +43,11 @@ class SimpleAlarm : public SimpleTime
          */
         bool check(SimpleTime t);
         bool check(int hours, int minutes, int seconds);
+
+        /*
+         * Set the callback function to trigger on an alarm
+         */
+        void setCallBack(CallBack cb) {this->_callback = cb;};
 
         /* 
          * Enables the alarm

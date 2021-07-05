@@ -32,3 +32,32 @@ https://github.com/espressif/arduino-esp32/blob/master/libraries/Preferences/exa
         // Alarm activated
       }
     }
+
+
+## Example with callbacks
+
+    void alarm()
+    {
+        // Alarm Activated callback function
+    }
+
+    void setup()
+    {
+      /* your other setup here */
+
+      NTPClient timeClient(ntpUDP, "au.pool.ntp.org", 39600, 60000);
+      SimpleAlarm simpleAlarm = SimpleAlarm();
+
+      simpleAlarm.setCallBack(alarm);
+      simpleAlarm.set(8,30,0);  // set alarm to 8:30am
+      simpleAlarm.enable();  // enable alarm
+    }
+
+    void loop()
+    {
+      /* your other loop here */
+
+      timeClient.update();
+      SimpleTime time(timeClient.getHours(), timeClient.getMinutes(), timeClient.getSeconds());
+      simpleAlarm.check(time));
+    }
