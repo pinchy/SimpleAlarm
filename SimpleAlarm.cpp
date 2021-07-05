@@ -1,13 +1,11 @@
 #include "SimpleAlarm.h"
-#include <Arduino.h>
-#include <Preferences.h>    // https://github.com/espressif/arduino-esp32/blob/master/libraries/Preferences/examples/StartCounter/StartCounter.ino
-
 
 SimpleAlarm::SimpleAlarm(void) : SimpleTime()
 {
     this->_enabled = false;
 }
 
+#ifdef ARDUINO_ARCH_ESP32
 void SimpleAlarm::load()
 {
     this->_mem.begin("simplealarm", false);
@@ -22,6 +20,7 @@ void SimpleAlarm::save()
     this->_mem.putUInt("minutes", this->getMinutes());
     this->_mem.putUInt("seconds", this->getSeconds());
 }
+#endif
 
 
 bool SimpleAlarm::check(SimpleTime t)
@@ -56,13 +55,19 @@ bool SimpleAlarm::isEnabled(void)
 void SimpleAlarm::enable(void)
 {
     this->_enabled = true;
+
+    #ifdef ARDUINO_ARCH_ESP32
     this->_mem.begin("simplealarm", false);
     this->_mem.putUInt("enabled", this->_enabled);
+    #endif
 }
 
 void SimpleAlarm::disable(void)
 {
     this->_enabled = false;
+
+    #ifdef ARDUINO_ARCH_ESP32
     this->_mem.begin("simplealarm", false);
     this->_mem.putUInt("enabled", this->_enabled);
+    #endif
 }
